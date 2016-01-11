@@ -17,7 +17,7 @@ public class DateAddTest {
             long longTime = strTypeChangeDate(START_TIME);
             System.out.println(longTime);
             System.out.println(longTypeChangeDate(longTime+1000));
-            strTypeChangeDate(START_TIME);
+            System.out.println(strTypeChangeDate(START_TIME));
         }catch (Exception e){
             e.printStackTrace();
         }

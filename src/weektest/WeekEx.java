@@ -11,9 +11,56 @@ public class WeekEx {
 
     public static void main(String[] args){
         WeekEx weekEx = new WeekEx();
-        System.out.println(weekEx.getDay());
-        System.out.println(weekEx.getCurWeek());
+//        System.out.println(weekEx.getDay());
+//        System.out.println(weekEx.getCurWeek());
 
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("mon");
+        list.add("tue");
+        list.add("thu");
+        list.add("sat");
+
+//        System.out.println(weekEx.dateMaker(list));
+
+//        for(int i=0; i<list.size(); i++){
+//            System.out.println(weekEx.dateMaker(list.get(i).toString()));
+//        }
+    }
+
+    public String dateMaker(String week){
+        final String[] weekArr = {"sun","mon", "tue", "wed", "thu", "fri", "sat"};
+        int yoilNum = -1;
+        for(int i=0; i<weekArr.length; i++){
+            if(weekArr[i].equals(week)){
+                yoilNum = i+1;
+            }
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, yoilNum);
+        String dateStr = simpleDateFormat.format(calendar.getTime());
+
+        return dateStr;
+    }
+
+    public String dateMaker(List<String> weekList){
+        final String[] weekArr = {"sun","mon", "tue", "wed", "thu", "fri", "sat"};
+        int yoilNum = -1;
+        for(int i=0; i<weekList.size(); i++){
+            String week = weekList.get(i);
+            for(int j=0; j<weekArr.length; j++){
+                if(weekArr[j].equals(week)){
+                    yoilNum = j+1;
+                }
+            }
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, yoilNum);
+        String dateStr = simpleDateFormat.format(calendar.getTime());
+
+        return dateStr;
     }
 
     public String makeDate(String stateTime){
