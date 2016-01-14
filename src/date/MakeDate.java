@@ -10,7 +10,7 @@ import java.util.List;
 public class MakeDate {
 
     public static final String DATE_FORMAT  = "HH:mm:ss";
-    public static final String START_TIME   = "12:00:00";
+    public static final String START_TIME   = "00:00:00";
     public static final String END_TIME     = "18:00:00";
 
     public static final String SCH_01       = "100";
@@ -23,16 +23,20 @@ public class MakeDate {
 
     public static long startTime  = 0l;
     public static long endTime    = 0l;
+    public static String[] schTime = {"",""};
 
 
     public static void main(String[] args) throws Exception{
         initPrint();
-        itemRepeat();
+//        itemRepeat();
     }
 
-    private static void initPrint(){
-        System.out.println("----시작 시간 : "+START_TIME);
+    private static void initPrint() throws Exception{
+        System.out.println("----시작 시간  : "+START_TIME);
+        System.out.println("----longType : "+strTypeChangeDate(START_TIME));
         System.out.println("----종료 시간 : "+END_TIME);
+        System.out.println("----longType : "+strTypeChangeDate(END_TIME));
+        System.out.println("==========================================");
         list = new ArrayList<Integer>();
         list.add(100);
         list.add(200);
@@ -40,36 +44,104 @@ public class MakeDate {
         list.add(10);
         System.out.println("반복 해야 될 시간 : "+list.toString());
         System.out.println("==========================================");
+//        itemsAdd();
+//        itemAdd();
         try{
             startTime = strTypeChangeDate(START_TIME);
             endTime   = strTypeChangeDate(END_TIME);
+            String [] arr = {"",""};
+            String [] copyArr = {"",""};
+
+            String startDateTime = START_TIME;
+            String endDateTime = END_TIME;
+
+            for(int i=0; i<list.size(); i++){
+                int playTime = list.get(i);
+//                startTime += playTime*1000;
+//                startDateTime = longTypeChangeDate(startTime);
+//                System.out.println("startDate : "+startDateTime+" / endDate : "+longTypeChangeDate(startTime));
+                if(!arr[0].equals("") && !arr[1].equals("")){
+                    System.out.println("arr[0]"+arr[0]);
+                    startDateTime = arr[0];
+                    endDateTime = arr[1];
+                }
+                arr = itemArrAdd(startDateTime, endDateTime, playTime);
+
+                System.out.println(arr[0]);
+                System.out.println(arr[1]);
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private static void itemRepeat() throws Exception{
-        while(endTime<=strTypeChangeDate(END_TIME)){
-            System.out.println(startTime);
-            System.out.println(strTypeChangeDate(END_TIME));
-            addItems();
+    private static String[] itemArrAdd(String startTime, String endTime, int playTime) throws Exception{
+        String[] schTime = {"",""};
+        long lstatrTime = strTypeChangeDate(startTime);
+        long lendTime = strTypeChangeDate(endTime);
+
+        System.out.println("startTime !! "+startTime);
+        if(lstatrTime<=lendTime){
+            lstatrTime += playTime * 1000;
+            schTime[0] = startTime;
+            schTime[1] = longTypeChangeDate(lstatrTime);
         }
+        return schTime;
     }
 
-    private static void addItems() throws Exception{
-        long copyStartTime = startTime;
+
+
+    private static void itemAdd()throws Exception{
+        long startTime = strTypeChangeDate(START_TIME);
+        long endTime = strTypeChangeDate(END_TIME);
+        long addItemTime = startTime;
+
+        String startDate = "";
+        String endDate = "";
+        int count = 0;
+
+        System.out.println("start : "+startTime+ " / end : "+endTime);
+
         for(int i=0; i<list.size(); i++){
-            if(endTime<strTypeChangeDate(END_TIME)){
-                System.out.println("시작 시간 : "+longTypeChangeDate(startTime));
-                copyStartTime += list.get(i)*1000;
-                endTime = copyStartTime;
-                System.out.println("종료 시간 : "+longTypeChangeDate(endTime));
-                System.out.println("==========================================");
-                startTime = endTime;
+            if(addItemTime<=endTime){
+                System.out.println("================================");
+                startDate = longTypeChangeDate(addItemTime);
+                System.out.println("시작 시간 : "+startDate);
+                addItemTime += list.get(i)*1000;
+                endDate = longTypeChangeDate(addItemTime);
+                System.out.println("종료 시간 : "+endDate);
+                count++;
             }
         }
     }
 
+    private static void itemsAdd()throws Exception{
+        long startTime = strTypeChangeDate(START_TIME);
+        long endTime = strTypeChangeDate(END_TIME);
+        long addItemTime = startTime;
+
+        String startDate = "";
+        String endDate = "";
+        int count = 0;
+
+        System.out.println("start : "+startTime+ " / end : "+endTime);
+        while(addItemTime<=endTime){
+            for(int i=0; i<list.size(); i++){
+//              addItemTime += list.get(i)*1000;
+                if(addItemTime<=endTime){
+                    System.out.println("================================");
+                    startDate = longTypeChangeDate(addItemTime);
+                    System.out.println("시작 시간 : "+startDate);
+                    addItemTime += list.get(i)*1000;
+                    endDate = longTypeChangeDate(addItemTime);
+                    System.out.println("종료 시간 : "+endDate);
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
 
     public static long strTypeChangeDate(String schDate) throws Exception{
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
