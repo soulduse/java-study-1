@@ -8,10 +8,13 @@ import java.util.List;
  * Created by sould on 2016-01-11.
  */
 public class MakeDate {
-
+    public static final long ONEDAY= ((1000*60)*60)*24;
+    public static final long BASICNUM = 60*60*9*1000;
     public static final String DATE_FORMAT  = "HH:mm:ss";
+    public static final String NEW_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String START_TIME   = "00:00:00";
-    public static final String END_TIME     = "18:00:00";
+    public static final String MID_TIME     = "09:00:00";
+    public static final String END_TIME     = "24:00:00";
 
     public static final String SCH_01       = "100";
     public static final String SCH_02       = "200";
@@ -29,6 +32,7 @@ public class MakeDate {
     public static void main(String[] args) throws Exception{
         initPrint();
 //        itemRepeat();
+
     }
 
     private static void initPrint() throws Exception{
@@ -49,12 +53,19 @@ public class MakeDate {
         try{
             startTime = strTypeChangeDate(START_TIME);
             endTime   = strTypeChangeDate(END_TIME);
+//            startTime += BASICNUM;
+//            endTime += BASICNUM;
+
             String [] arr = {"",""};
             String [] copyArr = {"",""};
 
+            System.out.println("Long Change : start : "+startTime+" / end : "+endTime);
+            long dateLong = 1452834*1000000l;
+            System.out.println(longDateChange(dateLong));
+
             String startDateTime = START_TIME;
             String endDateTime = END_TIME;
-
+/*
             for(int i=0; i<list.size(); i++){
                 int playTime = list.get(i);
 //                startTime += playTime*1000;
@@ -70,6 +81,7 @@ public class MakeDate {
                 System.out.println(arr[0]);
                 System.out.println(arr[1]);
             }
+            //*/
 
         }catch (Exception e){
             e.printStackTrace();
@@ -151,5 +163,10 @@ public class MakeDate {
     public static String longTypeChangeDate(long time){
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         return sdf.format(time);
+    }
+
+    public static String longDateChange(long date){
+        SimpleDateFormat sdf = new SimpleDateFormat(NEW_DATE_FORMAT);
+        return sdf.format(date);
     }
 }
